@@ -82,7 +82,7 @@ public class LetterInventory {
 	//post: Returns a new LetterInventory Object that represents the
 	//combination of this and other LetterInventory Objects
 	
-	public LetterInventory add(LetterInventory other) {
+	private LetterInventory add(LetterInventory other) {
 		LetterInventory sum = new LetterInventory("");
 		for (char ch = 'a'; ch <= 'z' ; ch++) {
 			sum.set(ch, get(ch) + other.get(ch));

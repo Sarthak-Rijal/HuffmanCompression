@@ -3,31 +3,68 @@ import java.util.*;
 
 public class HuffmanCode{
 
+	private Queue<HuffmanNode> pQueue;
 
 
-	private class HuffmanNode{
-	public String character;
-	public int frequency;
-	public HuffmanNode left;
-	public HuffmanNode right;
+	private class HuffmanNode implements Comparator<HuffmanNode>{
+   	public String character;
+   	public int frequency;
+   	public HuffmanNode left;
+   	public HuffmanNode right;
+   
+   	public HuffmanNode(String character, int frequency, 
+   					HuffmanNode left, HuffmanNode right ){
+   		this.character = character;
+   		this.frequency = frequency;
+   		this.left = left;
+   		this.right = right;
+	}
 
-	public HuffmanNode(String character, int frequency, 
-					HuffmanNode left, HuffmanNode right ){
+
+	public HuffmanNode(String character, int frequency){
 		this.character = character;
 		this.frequency = frequency;
-		this.left = left;
-		this.right = right;
-		}
+		this.left = null;
+		this.right = null;
 	}
+		   
+   
+   	public int compareTo(HuffmanNode other){
+   		if (this.frequency < other.frequency){
+   			return -1;
+   		} else  if (this.frequency > other.frequency){
+   			return 1;
+   		} else {
+   			return 0;
+   		}
+   	}
+   }
 
 //     This constructor should initialize a new HuffmanCode object using the algorithm described for making
 // a code from an array of frequencies. frequencies is an array of frequencies where frequences[i]
 // is the count of the character with ASCII value i. Make sure to use a PriorityQueue to build the
 // huffman code.
     public HuffmanCode(int[] frequencies){
-		System.out.println(frequencies);
+		pQueue = new PriorityQueue<HuffmanNode>();
+		for (int i = 0; i < frequencies.length; i++){
+			if (frequencies[i] != 0){
+				char character = frequencies.toString((char) i);
+				pQueue.add(new HuffmanNode(character, frequencies[i]));
+				
+			}
+		}
 
+		while (pQueue.size() != 1){
+			HuffmanNode one = pQueue.remove();
+			HuffmanNode two = pQueue.remove();
+			HuffmanNode combine = new HuffmanNode(null, one.frequency+two.frequency, one, two);
+			pQueue.add(combine);
+      }
     }
+
+	private void makeCode(){
+
+	}
     // This constructor should initialize a new HuffmanCode object by reading in a previously constructed
     // code from a .code file. You may assume the Scanner is not null and is always contains data
     // encoded in legal, valid standard format.

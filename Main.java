@@ -4,17 +4,17 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
         
-        File file = new File("simple.txt");
+        
         try {
-            Scanner input = new Scanner(file);
-            String content = "";
-            while (input.hasNextLine()){
-                content += input.nextLine();
+            FileInputStream input = new FileInputStream("simple.txt");
+            int[] count = new int[255];
+            int n = input.read();
+            while (n != -1) {
+                count[n]++;
+                n = input.read();
             }
-            LetterInventory inventory = new LetterInventory(content);
-            System.out.print(inventory.toString());
         }
-        catch (FileNotFoundException ex){
+        catch (FileNotFoundException ex, IOException e){
             System.out.println("No such file bru");
         }
 
